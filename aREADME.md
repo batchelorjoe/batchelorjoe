@@ -4,7 +4,8 @@
 -  
 -    
 - 🌱 I’m currently learning ...that such systems rely on machine learning and artificial intelligence, combining computation, data, models, and algorithms.
-- 💞️ I’m wound not say that I am looking to collaborate on anything...
+- 💞️ I’m would not say that I am looking to collaborate on anything...
+- I do this for my personal satisfaction, My profession is solution architecure.
 - 📫 How to reach me ... You can find my LinkedIn profile by the same name  batchelorjoe 
 
 <!---
