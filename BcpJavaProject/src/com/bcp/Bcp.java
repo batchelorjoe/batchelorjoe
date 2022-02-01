@@ -1,4 +1,4 @@
-package bcp;
+package com.bcp;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,9 +8,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.WindowConstants;
-
-import bcp.gui.BcpDialog;
-import bcp.gui.SwingFrame;
 
 public class Bcp implements WindowListener, ActionListener{
 //private static Bcp bcp;

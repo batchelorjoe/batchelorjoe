@@ -1,4 +1,4 @@
-import bcp.Bcp;
+import com.bcp.Bcp;
 
 public class App {
     public static void main(String[] args) throws Exception {
