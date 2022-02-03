@@ -8,9 +8,6 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-//import com.bco.util.Bcpa;
-import com.bcp.Clock;
-
 import javax.swing.JTextArea;
 
 public class BcpDialog extends JDialog {

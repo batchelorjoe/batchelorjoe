@@ -7,108 +7,199 @@ import java.awt.event.WindowListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.WindowConstants;
 
 public class Bcp implements WindowListener, ActionListener{
-//private static Bcp bcp;
-private String statusText = "BCP is running";
-
-private BcpDialog dialog;
-private SwingFrame frame;
 
 
-
-public static void run() {
-		System.out.println("BCP is running");
-		new Bcp();
-		//bcp.startClock();
-	}
 public Bcp(){
-	//Constructor
-statusText = "BCP Constructor";
-dialog = new BcpDialog();
-frame = new SwingFrame();
+	/**
+	 * Contructed in the App class
+	 * frame size and visibility is set in App class
+	 */
+
+	statusText = "BCP Under Construction";
+	/***
+	 * Create the main window
+	 */
+	setFrame(new SwingFrame("Credit Accounts"));
+
+	/** 
+	 *  The SwingFrame will create a menu and load the components.
+	 *  Utilizing this class to handle the menu and window events of 
+	 *  the frame.
+	 */
 
 }
-	
-public String getStatusText() {
-	return statusText;
-}
-public void setStatusText(String statusText) {
-	this.statusText = statusText;
-}
-public BcpDialog getDialog() {
-	return dialog;
-}
-private void setDialog(BcpDialog dialog) {
-	this.dialog = dialog;
-}
-public SwingFrame getFrame() {
-	return frame;
-}
-private void setFrame(SwingFrame frame) {
-	this.frame = frame;
-}
-public void startClock() {
-	setDialog(new BcpDialog());
-	getDialog().addWindowListener(this);
-	getDialog().setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-	getDialog().setClockFace("Starting Clock");
-	Timer timer = new Timer();
-	timer.schedule(new TimerTask() {
-		@Override
-		public void run() {
-			//System.out.println("Running: " + new java.util.Date());
-			getDialog().setClockFace("Running: " + new java.util.Date());
-		}
-	}, 0, 1000);
-	getDialog().setVisible(true);
-	}
-
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("BCP actionPerformed");
+		switch (e.getActionCommand()) {
+           
+				case "Open":
+					runMenuOpen();
+					break;
+				case "Save as":
+					runMenuSave();
+					break;
+				case "Quit":
+					runMenuExit();
+					break;
+				
+				case "About":
+					message("About Time?");
+					break;
+				default: 
+					message("Default Action, this is an error");
+					break;
+			}
+	
 	}
+	private void runMenuExit() {
+		message("Bye Bye");
+		System.exit(0);
+	}
+
+	private void runMenuSave() {
+		message("Save is not Implemented Yet");
+	}
+
+	private void runMenuOpen() {
+	message("Open is not implemented yet.");
+	}
+
 	@Override
 	public void windowOpened(WindowEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("BCP windowOpened");
+		message("BCP windowOpened");
 	}
 	@Override
 	public void windowClosing(WindowEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("BCP windowClosing");
+		message("BCP windowClosing");
 	}
 	@Override
 	public void windowClosed(WindowEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("BCP windowClosed");
+		message("BCP windowClosed");
 		System.exit(0);
 	}
 	@Override
 	public void windowIconified(WindowEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("BCP windowIconified");
+		message("BCP windowIconified");
 	}
 	@Override
 	public void windowDeiconified(WindowEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("BCP windowDeiconified");
+		message("BCP windowDeiconified");
 	}
 	@Override
-	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("BCP windowActivated");
+	public void windowActivated(WindowEvent e) {		
+		message("BCP windowActivated");
 	}
 	@Override
 	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("BCP windowDeactivated");
+		message("BCP windowDeactivated");
 	}
+	public void setFrameSize(int i, int j) {
+		frame.setSize(i,j);
+		message("Frame size is now "+ i + " by " + j + " per Bcp.setFrameSize(int,int)");
+	}
+    public void showFrame(boolean b) {
+		frame.setVisible(b);
+    }
+	public void message(String string) {
+		System.out.println(string);
+	}
+
+	/**
+	 * Class Variables
+	 */
+	private String statusText = "BCP is running";
+	private BcpDialog dialog;
+	private SwingFrame frame;
 	
+	/**
+ 	* 
+ 	* Getters and Setters
+ 	*/
+	public String getStatusText() {
+		return statusText;
+	}
+	public void setStatusText(String statusText) {
+		this.statusText = statusText;
+	}
+	public BcpDialog getDialog() {
+		return dialog;
+	}
+	private void setDialog(BcpDialog d) {
+		// Add default attributes to the dialog
+		d.addWindowListener(this);
+		d.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.dialog = d;
+	}
+	public SwingFrame getFrame() {
+		return frame;
+		}
+	private void setFrame(SwingFrame frame) {
+		frame.setJMenuBar(getMenu());
+		this.frame = frame;
+	}
+	/**
+	 * 	MENU Code
+	 */
+	private JMenuBar getMenu(){
+		// Creating the MenuBar and adding components
+		JMenuItem mi_open = new JMenuItem("Open");
+		mi_open.addActionListener(this);
+
+		JMenuItem mi_save = new JMenuItem("Save as");
+		mi_save.addActionListener(this);
+
+		JMenuItem mi_quit = new JMenuItem("Quit");
+		mi_quit.addActionListener(this);
+		
+		JMenu m_file = new JMenu("FILE");
+		m_file.add(mi_open);
+		m_file.add(mi_save);
+		m_file.add(mi_quit);
 	
+		JMenuItem mi_about = new JMenuItem("About");
+		mi_about.addActionListener(this);
+
+		JMenu m_help = new JMenu("HELP");
+		m_help.add(mi_about);
+
+		JMenuBar m_bar = new JMenuBar();
+		m_bar.add(m_file);
+		m_bar.add(m_help);
+		return m_bar;
+	}
+	/**
+	 * main was defined during initial coding, this class is intended to be called by the application class
+	 */
+	public static void run() {	
+		Bcp bcp = new Bcp();
+		bcp.message("BCP is running");
+		bcp.startClock();
+	}
+
+	public void startClock() {
+		getDialog().setClockFace("Starting Clock");
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+		@Override
+		public void run() {
+			//System.out.println("Running: " + new java.util.Date());
+			getDialog().setClockFace("Running: " + new java.util.Date());
+			}
+		}, 0, 1000);
+		getDialog().setVisible(true);
+	}
 }
 
 
