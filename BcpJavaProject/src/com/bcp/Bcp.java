@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -64,11 +67,29 @@ public Bcp(){
 	}
 
 	private void runMenuSave() {
-		message("Save is not Implemented Yet");
+		message("Starting to implement Save");
+		Wallet w = new Wallet();
+		w.saveWallet();
+
+		try{
+			FileInputStream readData = new FileInputStream("peopledata.ser");
+			ObjectInputStream readStream = new ObjectInputStream(readData);
+		
+			ArrayList<CreditCard> wallet = (ArrayList<CreditCard>) readStream.readObject();
+			readStream.close();
+			System.out.println(wallet.toString());
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void runMenuOpen() {
-	message("Open is not implemented yet.");
+	message("Starting to implement Open.");
+		Wallet w = new Wallet();
+		getFrame().refreshCard(w.getCardData());
+
+
+
 	}
 
 	@Override
