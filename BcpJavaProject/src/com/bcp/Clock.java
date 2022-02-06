@@ -6,7 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;  
 import java.util.Locale;  
 import javax.swing.JFrame;  
-import javax.swing.JPanel;  
+import javax.swing.JPanel; 
+/*
+Clock Panel 
+*/
+
+
 public class Clock extends JPanel implements Runnable  
 {  
  Thread thread = null;  

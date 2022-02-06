@@ -5,7 +5,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,17 +28,7 @@ public Bcp(){
 	 * frame size and visibility is set in App class
 	 */
 
-	statusText = "BCP Under Construction";
-	/***
-	 * Create the main window
-	 */
-	setFrame(new SwingFrame("Credit Accounts"));
-
-	/** 
-	 *  The SwingFrame will create a menu and load the components.
-	 *  Utilizing this class to handle the menu and window events of 
-	 *  the frame.
-	 */
+	
 
 }
 
@@ -72,19 +66,39 @@ public Bcp(){
 		w.saveWallet();
 
 		try{
-			FileInputStream readData = new FileInputStream("peopledata.ser");
+			FileInputStream readData = new FileInputStream("carddata.ser");
 			ObjectInputStream readStream = new ObjectInputStream(readData);
-		
 			ArrayList<CreditCard> wallet = (ArrayList<CreditCard>) readStream.readObject();
 			readStream.close();
 			System.out.println(wallet.toString());
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+		}catch(FileNotFoundException fnf)
+		{}
+		catch (Exception e) 
+			{ e.printStackTrace(); }
+
+//write to file
+/*
+try{
+	FileOutputStream writeData = new FileOutputStream("carddata.ser");
+	ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
+
+	writeStream.writeObject(new CreditCard().getList().toString());
+	writeStream.flush();
+	writeStream.close();
+
+}catch (IOException e) {
+	e.printStackTrace();
+}
+*/
 	}
 
 	private void runMenuOpen() {
 	message("Starting to implement Open.");
+
+	message("Checking Wallet");
+	message(Wallet.checkWallet());
+	message(Wallet.getLogString().toString());
+	message("Opening Wallet");
 		Wallet w = new Wallet();
 		getFrame().refreshCard(w.getCardData());
 
@@ -203,13 +217,34 @@ public Bcp(){
 	/**
 	 * main was defined during initial coding, this class is intended to be called by the application class
 	 */
-	public static void run() {	
-		Bcp bcp = new Bcp();
-		bcp.message("BCP is running");
-		bcp.startClock();
+	public void run() {	
+		//Bcp bcp = new Bcp();
+		message("BCP is running");
+		initGUI();
+		//startClock();
+	}
+
+	public void initGUI() {
+		
+		setFrame(new SwingFrame("Credit Accounts"));
+		setFrameSize(600,400);
+        showFrame(true);
 	}
 
 	public void startClock() {
+
+
+		statusText = "BCP Under Construction";
+	/***
+	 * Create the main window
+	 */
+	
+
+	/** 
+	 *  The SwingFrame will create a menu and load the components.
+	 *  Utilizing this class to handle the menu and window events of 
+	 *  the frame.
+	 */
 		getDialog().setClockFace("Starting Clock");
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
@@ -220,6 +255,8 @@ public Bcp(){
 			}
 		}, 0, 1000);
 		getDialog().setVisible(true);
+
+		
 	}
 }
 

@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.EventQueue;
 import java.util.ArrayList;
-
+import javax.swing.WindowConstants;
 import static javax.swing.GroupLayout.DEFAULT_SIZE;
 import java.awt.Color;
 
@@ -52,14 +52,52 @@ public class SwingFrame extends JFrame {
 	private JPanel pnl;
 
 	public SwingFrame() {		
-		setupPanel();
+		this("Default Title");
+		//setupPanel();
 	}
 
 	public SwingFrame(String string) {
 		
-		setupPanel();
+		//setupPanel();
 		setTitle(string);
+		initGUI();
     }
+
+	private void initGUI(){
+		JPanel p1 = new Clock();
+		JPanel p2 = new Hand();
+		
+		var pane = getContentPane();
+		var gl = new GroupLayout(pane);
+		pane.setLayout(gl);
+	
+		gl.setAutoCreateGaps(true);
+	
+		gl.setHorizontalGroup(gl.createSequentialGroup()
+				//.addContainerGap(DEFAULT_SIZE, Short.MAX_VALUE)
+				.addGroup(gl.createParallelGroup()
+						.addComponent(p1)
+						.addComponent(p2))
+				
+				//.addContainerGap(DEFAULT_SIZE, Short.MAX_VALUE)
+		);
+	
+		gl.setVerticalGroup(gl.createSequentialGroup()
+				//.addContainerGap(DEFAULT_SIZE, Short.MAX_VALUE)
+				.addGroup(gl.createParallelGroup()
+						.addComponent(p2)
+						.addComponent(p1))
+			
+				//.addContainerGap(DEFAULT_SIZE, Short.MAX_VALUE)
+		);
+	
+		gl.linkSize(p1, p2);
+	
+		pack();
+
+
+
+	}
 
 	private void setupPanel(){
 
